@@ -1,0 +1,19 @@
+.task-column {
+    background-color: #f1f1f1;
+    border-radius: 8px;
+    width: 300px;
+    padding: 15px;
+    margin-right: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.task-column-title h2 {
+    font-size: 18px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.task-column-content {
+    flex-grow: 1;
+}

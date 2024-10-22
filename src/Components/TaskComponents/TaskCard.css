@@ -1,0 +1,30 @@
+.ticket {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 15px;
+    margin-bottom: 10px;
+    box-shadow: 0px 2px 4px rgba(0,0,0,0.1);
+}
+
+.ticket-title {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.ticket-tags {
+    margin-bottom: 10px;
+}
+
+.ticket-tag {
+    background-color: #e0e0e0;
+    border-radius: 3px;
+    padding: 5px;
+    margin-right: 5px;
+    font-size: 12px;
+}
+
+.ticket-priority {
+    font-size: 14px;
+    color: #555;
+}
