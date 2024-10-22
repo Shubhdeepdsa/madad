@@ -19,10 +19,13 @@ const TaskBoard = () => {
   }, []);
   return (
     <>
-      <p>This is the taskboard</p>
-      {fetchedTask.length > 0 ? (
+      {fetchedTask.length > 0 && fetchedUsers.length > 0 ? (
         <>
-          <TaskFilter tickets={fetchedTask} setDisplayTasks={setDisplayTasks} />
+          <TaskFilter
+            tickets={fetchedTask}
+            setDisplayTasks={setDisplayTasks}
+            users={fetchedUsers}
+          />
           <TaskDisplay tasks={displayTasks} />
         </>
       ) : (

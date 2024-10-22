@@ -4,7 +4,7 @@ import "./TaskFilter.css";
 const GROUP_OPTIONS = ["Status", "User", "Priority"];
 const ORDER_OPTIONS = ["Priority", "Title"];
 
-const TaskFilter = ({ setDisplayTasks, tickets }) => {
+const TaskFilter = ({ setDisplayTasks, tickets, users }) => {
   const [isDisplayOpen, setIsDisplayOpen] = useState(false);
   const [selectedGroup, setSelectedGroup] = useState(GROUP_OPTIONS[0]);
   const [selectedOrder, setSelectedOrder] = useState(ORDER_OPTIONS[0]);
@@ -22,18 +22,41 @@ const TaskFilter = ({ setDisplayTasks, tickets }) => {
       const groupedAndOrderedTickets = groupAndOrderTickets(
         tickets,
         selectedGroup,
-        selectedOrder
+        selectedOrder, 
+        users
       );
       setDisplayTasks(groupedAndOrderedTickets);
     }
   }, [selectedGroup, selectedOrder, tickets]);
 
   // Function to group and order tickets
-  const groupAndOrderTickets = (tickets, groupBy, orderBy) => {
+  const groupAndOrderTickets = (tickets, groupBy, orderBy, users) => {
+    // Create a mapping from userId to userName
+    const userMapping = users.reduce((acc, user) => {
+      acc[user.id] = user.name;
+      return acc;
+    }, {});
+
+    // Define the mapping between groupBy options and the corresponding fields in the ticket object
+    const groupKeyMapping = {
+      Status: "status",
+      User: "userId",
+      Priority: "priority",
+    };
+
+    // Use the correct field based on groupBy
+    const groupField = groupKeyMapping[groupBy];
+
     // Grouping logic
     console.log("This is tickets => ", tickets);
     const groupedTickets = tickets.reduce((acc, ticket) => {
-      const groupKey = ticket[groupBy.toLowerCase()]; // e.g., status, userId, or priority
+      let groupKey = ticket[groupField]; // e.g., status, userId, or priority
+
+      // If grouping by user, replace userId with the user name
+      if (groupBy === "User") {
+        groupKey = userMapping[groupKey] || "Unknown User"; // Replace userId with user name
+      }
+
       if (!acc[groupKey]) {
         acc[groupKey] = [];
       }
@@ -52,7 +75,8 @@ const TaskFilter = ({ setDisplayTasks, tickets }) => {
         return 0;
       });
     });
-    console.log(groupedTickets)
+
+    console.log(groupedTickets);
     return groupedTickets;
   };
 
